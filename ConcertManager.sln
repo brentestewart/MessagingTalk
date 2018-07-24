@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertManager", "ConcertManager\ConcertManager.csproj", "{FD7F7D22-3CCB-427B-A61B-10B220F01098}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertManager.Tests", "ConcertManager.Tests\ConcertManager.Tests.csproj", "{7B4F3D16-7C85-4B1F-A758-A5818FF00AF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertManager.Console", "ConcertManager.Console\ConcertManager.Console.csproj", "{765AC450-DF94-4146-B14F-F1457DD21C72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{FD7F7D22-3CCB-427B-A61B-10B220F01098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD7F7D22-3CCB-427B-A61B-10B220F01098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD7F7D22-3CCB-427B-A61B-10B220F01098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B4F3D16-7C85-4B1F-A758-A5818FF00AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4F3D16-7C85-4B1F-A758-A5818FF00AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B4F3D16-7C85-4B1F-A758-A5818FF00AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B4F3D16-7C85-4B1F-A758-A5818FF00AF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{765AC450-DF94-4146-B14F-F1457DD21C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{765AC450-DF94-4146-B14F-F1457DD21C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{765AC450-DF94-4146-B14F-F1457DD21C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{765AC450-DF94-4146-B14F-F1457DD21C72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
