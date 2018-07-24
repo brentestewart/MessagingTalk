@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using ConcertManager.Dispachers;
 using ConcertManager.Messages;
 
@@ -10,10 +12,12 @@ namespace ConcertManager
     {
         public List<Order> PendingOrders { get; set; } = new List<Order>();
         public IPublisher Publisher { get; }
+        private ConcurrentBag<Guid> OrdersComplete { get; set; }
 
-        public AppEntryPoint(IPublisher publisher)
+        public AppEntryPoint(IPublisher publisher, ConcurrentBag<Guid> ordersComplete)
         {
             Publisher = publisher;
+            OrdersComplete = ordersComplete;
         }
 
         public void TakeOrder(int ticketCount, decimal ticketPrice, string creditCardNumber)
@@ -38,7 +42,8 @@ namespace ConcertManager
 
             PendingOrders.Remove(pendingOrder);
 
-            Console.WriteLine($"Order Complete: {pendingOrder.OrderId}");
+            OrdersComplete.Add(pendingOrder.OrderId);
+            //Console.WriteLine($"Order Complete: {pendingOrder.OrderId}");
         }
     }
 }
