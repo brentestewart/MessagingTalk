@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ConcertManager.Dispachers;
 using ConcertManager.Messages;
+using NServiceBus;
 
 namespace ConcertManager
 {
@@ -8,20 +10,35 @@ namespace ConcertManager
     {
         private Random RandomGenerator { get; set; } = new Random();
         public IPublisher Publisher { get; }
+        public IEndpointInstance PaymentEndpoint { get; set; }
 
-        public PaymentManager(IPublisher publisher)
+        public PaymentManager(IPublisher publisher, IEndpointInstance paymentEndpoint)
         {
             Publisher = publisher;
+            PaymentEndpoint = paymentEndpoint;
         }
 
         public void Handle(ChargeCreditCard t)
         {
             var order = t.Order;
             
-            // TODO:Charge card
-            order.PaymentConfirmation = RandomGenerator.Next(10000, 99999).ToString();
+            PaymentEndpoint.Send(t);
+        }
+    }
 
-            Publisher.Publish(new CreditCardCharged { Order = order });
+    public class PaymentResponseManager : IHandleMessages<CreditCardCharged>
+    {
+        public IPublisher Publisher { get; }
+
+        public PaymentResponseManager(IPublisher publisher)
+        {
+            Publisher = publisher;
+        }
+
+        public Task Handle(CreditCardCharged message, IMessageHandlerContext context)
+        {
+            Publisher.Publish(message);
+            return Task.CompletedTask;
         }
     }
 }

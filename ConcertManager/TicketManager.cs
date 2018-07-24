@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ConcertManager.Dispachers;
 using ConcertManager.Messages;
 using ConcertManager.Repositories;
+using NServiceBus;
 
 namespace ConcertManager
 {
