@@ -37,8 +37,7 @@ namespace ConcertManager.Console
                 new PaymentManager("Manager 3", dispatcher, paymentsLog, 1m)
             };
             var threadedPaymentManagers = paymentManagers.Select(p => new ThreadedHandler<ChargeCreditCard>(p)).ToList();
-            //var paymentProcessor = new ThreadedHandler<ChargeCreditCard>(new RoundRobinDispatcher<ChargeCreditCard>(threadedPaymentManagers));
-            var paymentProcessor = new ThreadedHandler<ChargeCreditCard>(new FairDispatcher<ChargeCreditCard>(threadedPaymentManagers));
+            var paymentProcessor = new ThreadedHandler<ChargeCreditCard>(new RoundRobinDispatcher<ChargeCreditCard>(threadedPaymentManagers));
 
             var storageManager = new StorageManager(dispatcher, orderRepo);
 
