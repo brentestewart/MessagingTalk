@@ -18,7 +18,7 @@ namespace ConcertManager
             Publisher = publisher;
             OrderRepository = orderRepository;
             TotalTicketsAvailable = availableTickets;
-            RemainingTickets = OrderRepository.GetRemainingTickets();
+            RemainingTickets = TotalTicketsAvailable - OrderRepository.GetSoldTicketCount();
         }
 
         public void Handle(ReserveTickets t)

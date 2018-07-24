@@ -16,28 +16,7 @@ namespace ConcertManager.Dispachers
         void Handle(T t);
     }
 
-    public class LoggingMessageDispatcher : IPublisher
-    {
-        public IPublisher InnerPublisher { get; }
-
-        public LoggingMessageDispatcher(IPublisher innerPublisher)
-        {
-            InnerPublisher = innerPublisher;
-        }
-
-        public void Publish<T>(T t) where T : IMessage
-        {
-            Console.WriteLine($"Publishing: {t}");
-            InnerPublisher.Publish(t);    
-        }
-
-        public void Subscribe<T>(IHandle<T> handler) where T : IMessage
-        {
-            InnerPublisher.Subscribe(handler);
-        }
-    }
-
-        public class MessageDispatcher : IPublisher
+    public class MessageDispatcher : IPublisher
     {
         private Dictionary<string, List<Action<IMessage>>> Handlers { get; set; } = new Dictionary<string, List<Action<IMessage>>>();
 
@@ -56,6 +35,7 @@ namespace ConcertManager.Dispachers
 
         public void Subscribe<T>(IHandle<T> handler) where T : IMessage
         {
+            //Console.WriteLine($"Subscribing: {handler.GetType()} - {typeof(T)}");
             var handlers = FindOrCreateHandlers(typeof(T).FullName);
             handlers.Add(m => handler.Handle((T)m));
         }

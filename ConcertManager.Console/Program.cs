@@ -30,11 +30,13 @@ namespace ConcertManager.Console
             dispatcher.Subscribe<FeesCalculated>(orderProcessor);
             dispatcher.Subscribe<TaxesCalculated>(orderProcessor);
             dispatcher.Subscribe<CreditCardCharged>(orderProcessor);
+
             dispatcher.Subscribe(ticketManager);
             dispatcher.Subscribe(feeManager);
             dispatcher.Subscribe(taxManager);
             dispatcher.Subscribe(paymentManager);
             dispatcher.Subscribe(storageManager);
+            dispatcher.Subscribe(entryPoint);
 
             entryPoint.TakeOrder(4, 50M, "1234-1234-1234-1223");
 

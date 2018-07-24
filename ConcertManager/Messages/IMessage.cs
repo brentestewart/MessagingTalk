@@ -7,71 +7,29 @@ namespace ConcertManager.Messages
     public interface IMessage
     {
         Guid MessageId { get; }
+        Order Order { get; set; }
     }
 
     public abstract class Message : IMessage
     {
         public Guid MessageId { get; } = new Guid();
+        public Order Order { get; set; }
     }
 
-    public class Command : Message
-    {
-    }
-
+    public class Command : Message { }
     public class Event : Message { }
 
-    public class OrderPlaced : Event
-    {
-        public Order Order { get; set; }
-    }
 
-    public class ReserveTickets : Command
-    {
-        public Order Order { get; set; }
-    }
+    public class ReserveTickets : Command { }
+    public class CalculateFees : Command { }
+    public class CalculateTaxes : Command { }
+    public class ChargeCreditCard : Command { }
+    public class CommitOrder : Command { }
 
-    public class TicketsReserved : Event
-    {
-        public Order Order { get; set; }
-    }
-
-    public class CalculateFees : Command
-    {
-        public Order Order { get; set; }
-    }
-
-    public class FeesCalculated : Event
-    {
-        public Order Order { get; set; }
-    }
-
-    public class CalculateTaxes : Command
-    {
-        public Order Order { get; set; }
-    }
-
-    public class TaxesCalculated : Event
-    {
-        public Order Order { get; set; }
-    }
-
-    public class ChargeCreditCard : Command
-    {
-        public Order Order { get; set; }
-    }
-
-    public class CreditCardCharged : Event
-    {
-        public Order Order { get; set; }
-    }
-
-    public class CommitOrder : Command
-    {
-        public Order Order { get; set; }
-    }
-
-    public class OrderCommited : Event
-    {
-        public Order Order { get; set; }
-    }
+    public class OrderPlaced : Event { }
+    public class TicketsReserved : Event { }
+    public class FeesCalculated : Event { }
+    public class TaxesCalculated : Event { }
+    public class CreditCardCharged : Event { }
+    public class OrderCommited : Event { }
 }
