@@ -16,8 +16,6 @@ namespace ConcertManager.Console
         static void Main(string[] args)
         {
             AsyncMain().GetAwaiter().GetResult();
-
-            //System.Console.ReadKey();
         }
 
         static async Task AsyncMain()
@@ -66,47 +64,11 @@ namespace ConcertManager.Console
             entryPoint.TakeOrder(4, 50M, "1234-1234-1234-1223");
 
             System.Console.ReadKey();
-            //await RunLoop(endpointInstance)
-                //.ConfigureAwait(false);
 
             await paymentEndpointInstance.Stop()
                 .ConfigureAwait(false);
         }
 
         static ILog log = LogManager.GetLogger<Program>();
-
-        static async Task RunLoop(IEndpointInstance endpointInstance)
-        {
-            while (true)
-            {
-                log.Info("Press 'P' to place an order, or 'Q' to quit.");
-                var key = System.Console.ReadKey();
-                System.Console.WriteLine();
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.P:
-                        // Instantiate the command
-                        var command = new ChargeCreditCard()
-                        {
-                            Order = new Order() {Subtotal = 50m}
-                        };
-
-                        // Send the command
-                        log.Info($"Sending PlaceOrder command, OrderId = {command.Order.OrderId}");
-                        await endpointInstance.Send(command)
-                            .ConfigureAwait(false);
-
-                        break;
-
-                    case ConsoleKey.Q:
-                        return;
-
-                    default:
-                        log.Info("Unknown input. Please try again.");
-                        break;
-                }
-            }
-        }
     }
 }
