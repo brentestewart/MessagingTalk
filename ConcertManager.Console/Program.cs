@@ -14,31 +14,12 @@ namespace ConcertManager.Console
         static void Main(string[] args)
         {
             var orderRepo = new OrderRepository();
-            var innerDispatcher = new MessageDispatcher();
-            var dispatcher = new LoggingMessageDispatcher(innerDispatcher);
+            StorageManager.OrderRepository = orderRepo;
+            TicketManager.OrderRepository = orderRepo;
+            TicketManager.TotalTicketsAvailable = 500;
+            TicketManager.RemainingTickets = 500;
 
-            var entryPoint = new AppEntryPoint(dispatcher);
-            var orderProcessor = new OrderProcessor(dispatcher);
-            var ticketManager = new TicketManager(dispatcher, orderRepo, 500);
-            var feeManager = new BasicFeeManager(dispatcher);
-            var taxManager = new TaxManager(dispatcher);
-            var paymentManager = new PaymentManager(dispatcher);
-            var storageManager = new StorageManager(dispatcher, orderRepo);
-
-            dispatcher.Subscribe<OrderPlaced>(orderProcessor);
-            dispatcher.Subscribe<TicketsReserved>(orderProcessor);
-            dispatcher.Subscribe<FeesCalculated>(orderProcessor);
-            dispatcher.Subscribe<TaxesCalculated>(orderProcessor);
-            dispatcher.Subscribe<CreditCardCharged>(orderProcessor);
-
-            dispatcher.Subscribe(ticketManager);
-            dispatcher.Subscribe(feeManager);
-            dispatcher.Subscribe(taxManager);
-            dispatcher.Subscribe(paymentManager);
-            dispatcher.Subscribe(storageManager);
-            dispatcher.Subscribe(entryPoint);
-
-            entryPoint.TakeOrder(4, 50M, "1234-1234-1234-1223");
+            AppEntryPoint.TakeOrder(4, 50M, "1234-1234-1234-1223");
 
             System.Console.ReadKey();
         }

@@ -1,23 +1,16 @@
-﻿using ConcertManager.Dispachers;
+﻿using System;
+using ConcertManager.Dispachers;
 using ConcertManager.Messages;
 
 namespace ConcertManager
 {
-    public class BasicFeeManager : IHandle<CalculateFees>
+    public class BasicFeeManager
     {
-        public IPublisher Publisher { get; }
-
-        public BasicFeeManager(IPublisher publisher)
+        public static decimal CalculateFees(Order order)
         {
-            Publisher = publisher;
-        }
-
-        public void Handle(CalculateFees command)
-        {
-            var order = command.Order;
-            order.Fees = order.Subtotal * .10M;
-
-            Publisher.Publish(new FeesCalculated() { Order =  order});
+            var fees =  order.Subtotal * .10M;
+            Console.WriteLine($"Order: {order.OrderId} -- Calculated fees of {fees:C}");
+            return fees;
         }
     }
 }

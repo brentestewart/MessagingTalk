@@ -1,25 +1,18 @@
-﻿using ConcertManager.Dispachers;
+﻿using System;
+using ConcertManager.Dispachers;
 using ConcertManager.Messages;
 
 namespace ConcertManager
 {
-    public class TaxManager : IHandle<CalculateTaxes>
+    public class TaxManager
     {
-        public IPublisher Publisher { get; }
-        private readonly decimal TaxRate = .10M;
+        private static readonly decimal TaxRate = .10M;
 
-        public TaxManager(IPublisher publisher)
+        public static decimal CalculateTaxes(Order order)
         {
-            Publisher = publisher;
-        }
-
-        public void Handle(CalculateTaxes t)
-        {
-            var order = t.Order;
-
-            order.Taxes = (order.Subtotal + order.Fees) * TaxRate;
-
-            Publisher.Publish(new TaxesCalculated { Order = order });
+            var taxes = (order.Subtotal + order.Fees) * TaxRate;
+            Console.WriteLine($"Order: {order.OrderId} -- Calculated taxes of {taxes:C}");
+            return taxes;
         }
     }
 }

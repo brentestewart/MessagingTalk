@@ -6,28 +6,16 @@ using ConcertManager.Repositories;
 
 namespace ConcertManager
 {
-    public class TicketManager : IHandle<ReserveTickets>
+    public class TicketManager
     {
-        public IPublisher Publisher { get; }
-        public OrderRepository OrderRepository { get; }
-        public int TotalTicketsAvailable { get; }
-        public int RemainingTickets { get; private set; }
+        public static OrderRepository OrderRepository { get; set; }
+        public static int TotalTicketsAvailable { get; set; }
+        public static int RemainingTickets { get; set; }
 
-        public TicketManager(IPublisher publisher, OrderRepository orderRepository, int availableTickets)
+        public static void ReserveTickets(Order order)
         {
-            Publisher = publisher;
-            OrderRepository = orderRepository;
-            TotalTicketsAvailable = availableTickets;
-            RemainingTickets = TotalTicketsAvailable - OrderRepository.GetSoldTicketCount();
-        }
-
-        public void Handle(ReserveTickets t)
-        {
-            var order = t.Order;
-
             RemainingTickets -= order.TicketCount;
-
-            Publisher.Publish(new TicketsReserved() { Order = order });
+            Console.WriteLine($"Order: {order.OrderId} -- Reserved {order.TicketCount} tickets for {order.Subtotal:C}.");
         }
     }
 }

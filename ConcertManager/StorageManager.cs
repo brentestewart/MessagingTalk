@@ -4,24 +4,13 @@ using ConcertManager.Repositories;
 
 namespace ConcertManager
 {
-    public class StorageManager : IHandle<CommitOrder>
+    public class StorageManager
     {
-        public IPublisher Publisher { get; }
-        public OrderRepository OrderRepository { get; }
+        public static OrderRepository OrderRepository { get; set; }
 
-        public StorageManager(IPublisher publisher, OrderRepository orderRepository)
+        public void StoreOrder(Order order)
         {
-            Publisher = publisher;
-            OrderRepository = orderRepository;
-        }
-
-        public void Handle(CommitOrder t)
-        {
-            var order = t.Order;
-
             OrderRepository.StoreOrder(order);
-
-            Publisher.Publish(new OrderCommited {Order = order});
         }
     }
 }
